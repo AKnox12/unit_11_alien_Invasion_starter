@@ -3,6 +3,8 @@ import pygame
 
 from settings import Settings
 
+from Carts import Carts
+
 class AlienInvasion:
     '''Overall class, manages game assets and behavior.'''
 
@@ -18,8 +20,11 @@ class AlienInvasion:
         
 
         self.screen = pygame.display.set_mode((1200,800))
+
         pygame.display.set_caption("Alien Invasion")
 
+        self.carts = Carts(self)
+        
         # Set background color.
         self.bg_color = (230,230,230)
 
@@ -34,8 +39,10 @@ class AlienInvasion:
                     self.running = False
                     pygame.quit()
                     sys.exit()
+
             # Redraw the screen during each pass through the loop.
             self.screen.fill(self.settings.bg_color)
+            self.carts.blitme()
 
             # Most recently drawn screen visible
             pygame.display.flip()
