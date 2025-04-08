@@ -12,7 +12,7 @@ class Carts:
             self.game = game
             self.settings = game.settings
             self.screen = game.screen
-            self.screen_rect = self.screen.get_rect()
+            self.boundaries = self.screen.get_rect()
 
         # Load the Cart image and get rect.
             self.image = pygame.image.load('unit_11_alien_Invasion_starter/Assets/images/cart.png')
@@ -20,7 +20,7 @@ class Carts:
                 (self.settings.cart_width, self.settings.cart_height))
             
             self.rect = self.image.get_rect()
-            self.rect.midbottom = self.screen_rect.midbottom
+            self.rect.midbottom = self.boundaries.midbottom
             # Movement for the cart
             self.moving_right = False
             self.moving_left = False
@@ -29,9 +29,9 @@ class Carts:
     def update(self):
          # updating the position for the cart.
         temp_speed = 5
-        if self.moving_right:
+        if self.moving_right and self.rect.right < self.boundaries.right:
               self.x += temp_speed
-        if self.moving_left:
+        if self.moving_left and self.rect.left > self.boundaries.left:
              self.x -= temp_speed
 
         self.rect.x = self.x

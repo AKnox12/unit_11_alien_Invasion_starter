@@ -15,4 +15,5 @@ class Settings:
         self.cart_file = Path.cwd() / 'Assets' / 'images' / 'cart.png'
         self.cart_width = 170
         self.cart_height = 190
+        self.carts_speed = 5
         
