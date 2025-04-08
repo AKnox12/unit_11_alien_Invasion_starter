@@ -32,20 +32,23 @@ class CartBlaster:
         '''Start of Game Loop.'''
         while self.running:
             # Notice for keyboard and mouse events.
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-                    pygame.quit()
-                    sys.exit()
+            self._check_events()
 
             # Redraw the screen during each pass through the loop.
-            self.screen.blit(self.bg, (0,0))
-            self.carts.draw()
-
-
-            # Most recently drawn screen visible
-            pygame.display.flip()
+            self._update_screen()
             self.clock.tick(self.settings.FPS)
+
+    def _update_screen(self):
+        self.screen.blit(self.bg, (0,0))
+        self.carts.draw()
+        pygame.display.flip()
+
+    def _check_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+                pygame.quit()
+                sys.exit()
 
 if __name__ == '__main__':
     # Make a game instance, and run the game.
