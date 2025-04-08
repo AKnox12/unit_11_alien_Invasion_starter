@@ -3,12 +3,12 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from alien_invasion import CartBlaster
-
+    from arsenal import CartArsenal
 class Carts:
     '''a class to manage the cart.'''
             # From the Instructor
 
-    def __init__ (self, game: 'CartBlaster'):
+    def __init__ (self, game: 'CartBlaster', arsenal: 'CartArsenal') -> None:
             self.game = game
             self.settings = game.settings
             self.screen = game.screen
@@ -25,9 +25,14 @@ class Carts:
             self.moving_right = False
             self.moving_left = False
             self.x = float(self.rect.x)
+            self.arsenal = arsenal
     
     def update(self):
          # updating the position for the cart.
+        self._Updated_ship_movement()
+        self.arsenal.update_arsenal()
+
+    def _Updated_ship_movement(self):
         temp_speed = 5
         if self.moving_right and self.rect.right < self.boundaries.right:
               self.x += temp_speed
@@ -37,8 +42,13 @@ class Carts:
         self.rect.x = self.x
 
 
-    def draw(self):
+    def draw(self) -> None:
+         self.arsenal.draw()
          self.screen.blit(self.image, self.rect)
+
+    def fire(self) -> bool:
+         return self.arsenal.fire_bullet()
+    
          
    # def blitme(self):
     #    '''Draw the cart at its current location.'''

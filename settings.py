@@ -16,4 +16,11 @@ class Settings:
         self.cart_width = 170
         self.cart_height = 190
         self.carts_speed = 5
+
+        self.bullet_file = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'images' / 'beams.png'
+        self.laser_sound = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'sound' / 'laser.mp3'
+        self.bullet_speed = 7
+        self.bullet_width = 25
+        self.bullet_height = 80
+        self.bullet_amount = 7
         

@@ -2,6 +2,8 @@ import sys
 import pygame
 from settings import Settings
 from Carts import Carts
+from arsenal import CartArsenal
+
 
 class CartBlaster:
     '''Overall class, manages game assets and behavior.'''
@@ -12,7 +14,6 @@ class CartBlaster:
 
         self.clock = pygame.time.Clock()
         self.settings = Settings()
-        print(self.settings.bg_file)
 
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
 
@@ -24,7 +25,8 @@ class CartBlaster:
         self.bg = pygame.image.load(self.settings.bg_file)
         self.bg = pygame.transform.scale(self.bg, (self.settings.screen_width, self.settings.screen_height))
 
-        self.carts = Carts(self)
+        
+        self.carts = Carts(self, CartArsenal(self))
 
         self.running = True
 
@@ -68,6 +70,9 @@ class CartBlaster:
             self.carts.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.carts.moving_left = True
+        elif event.key == pygame.K_SPACE:
+            if self.carts.fire():
+                # play the laser sound
         elif event.key == pygame.K_q:
             self.running = False
             pygame.quit()
