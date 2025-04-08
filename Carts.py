@@ -21,6 +21,20 @@ class Carts:
             
             self.rect = self.image.get_rect()
             self.rect.midbottom = self.screen_rect.midbottom
+            # Movement for the cart
+            self.moving_right = False
+            self.moving_left = False
+            self.x = float(self.rect.x)
+    
+    def update(self):
+         # updating the position for the cart.
+        temp_speed = 5
+        if self.moving_right:
+              self.x += temp_speed
+        if self.moving_left:
+             self.x -= temp_speed
+
+        self.rect.x = self.x
 
 
     def draw(self):
