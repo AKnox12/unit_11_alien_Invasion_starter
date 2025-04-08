@@ -1,20 +1,32 @@
 import pygame
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from alien_invasion import CartBlaster
 
 class Carts:
     '''a class to manage the cart.'''
+            # From the Instructor
 
-    def __init__(self, ai_game):
-        '''Initiate the cart and set the starting position.'''
-        self.screen = ai_game.screen
-        self.screen_rect = ai_game.screen.get_rect()
+    def __init__ (self, game: 'CartBlaster'):
+            self.game = game
+            self.settings = game.settings
+            self.screen = game.screen
+            self.screen_rect = self.screen.get_rect()
 
         # Load the Cart image and get rect.
-        self.image = pygame.image.load('image/cart.png')
-        self.rect = self.image.get_rect()
-        self.rect.midbottom = self.screen_rect.midbottom
-        
+            self.image = pygame.image.load('unit_11_alien_Invasion_starter/Assets/images/cart.png')
+            self.image = pygame.transform.scale(self.image,
+                (self.settings.cart_width, self.settings.cart_height))
+            
+            self.rect = self.image.get_rect()
+            self.rect.midbottom = self.screen_rect.midbottom
 
-    def blitme(self):
-        '''Draw the cart at its current location.'''
-        self.screen.blit(self.image, self.rect)
+
+    def draw(self):
+         self.screen.blit(self.image, self.rect)
+         
+   # def blitme(self):
+    #    '''Draw the cart at its current location.'''
+   #     self.screen.blit(self.image, self.rect)
         

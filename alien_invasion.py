@@ -1,11 +1,9 @@
 import sys
 import pygame
-
 from settings import Settings
-
 from Carts import Carts
 
-class AlienInvasion:
+class CartBlaster:
     '''Overall class, manages game assets and behavior.'''
 
     def __init__(self) -> None:
@@ -14,10 +12,9 @@ class AlienInvasion:
 
         self.clock = pygame.time.Clock()
         self.settings = Settings()
+        print(self.settings.bg_file)
 
-        self.screen = pygame.display.set_mode(
-            (self.settings.screen_width, self.settings.screen_height))
-        
+        self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
 
         self.screen = pygame.display.set_mode((1200,800))
 
@@ -25,9 +22,7 @@ class AlienInvasion:
 
         # Set background.
         self.bg = pygame.image.load(self.settings.bg_file)
-        self.bg = pygame.transform.scale(self.bg,
-            (self.settings.screen_width, self.settings.screen_height)
-            )
+        self.bg = pygame.transform.scale(self.bg, (self.settings.screen_width, self.settings.screen_height))
 
         self.carts = Carts(self)
 
@@ -45,8 +40,8 @@ class AlienInvasion:
 
             # Redraw the screen during each pass through the loop.
             self.screen.blit(self.bg, (0,0))
-            self.screen.fill(self.settings.bg_color)
-            self.carts.blitme()
+            self.carts.draw()
+
 
             # Most recently drawn screen visible
             pygame.display.flip()
@@ -54,5 +49,5 @@ class AlienInvasion:
 
 if __name__ == '__main__':
     # Make a game instance, and run the game.
-    ai = AlienInvasion()
+    ai = CartBlaster()
     ai.run_game()
