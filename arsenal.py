@@ -12,12 +12,14 @@ class CartArsenal:
         self.settings = game.settings
         self.blaster = pygame.sprite.Group()
 
-    def update_arsenal(self) -> None:
+    def update_blaster(self) -> None:
         self.blaster.update()
+        self._remove_bullets_offscreen()
 
     def _remove_bullets_offscreen(self):
-        for bullet in self.CartArsenal.copy():
-
+        for bullet in self.blaster.copy():
+            if bullet.rect.bottom <= 0:
+                self.blaster.remove(bullet)
 
     def draw(self) -> None:
         for bullet in self.blaster:

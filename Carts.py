@@ -25,12 +25,12 @@ class Carts:
             self.moving_right = False
             self.moving_left = False
             self.x = float(self.rect.x)
-            self.arsenal = arsenal
+            self.blaster = blaster
     
     def update(self):
          # updating the position for the cart.
         self._Updated_ship_movement()
-        self.arsenal.update_arsenal()
+        self.blaster.update_blaster()
 
     def _Updated_ship_movement(self):
         temp_speed = 5
@@ -43,11 +43,11 @@ class Carts:
 
 
     def draw(self) -> None:
-         self.arsenal.draw()
+         self.blaster.draw()
          self.screen.blit(self.image, self.rect)
 
     def fire(self) -> bool:
-         return self.arsenal.fire_bullet()
+         return self.blaster.fire_bullet()
     
          
    # def blitme(self):

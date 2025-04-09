@@ -11,8 +11,6 @@ class CartBlaster:
     def __init__(self) -> None:
         '''Initialize the game, and create game resources.'''
         pygame.init()
-
-        self.clock = pygame.time.Clock()
         self.settings = Settings()
 
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
@@ -25,10 +23,17 @@ class CartBlaster:
         self.bg = pygame.image.load(self.settings.bg_file)
         self.bg = pygame.transform.scale(self.bg, (self.settings.screen_width, self.settings.screen_height))
 
-        
-        self.carts = Carts(self, CartArsenal(self))
 
         self.running = True
+        self.clock = pygame.time.Clock()
+
+        pygame.mixer.init()
+        self.laser_sound = pygame.mixer.Sound(self.settings.laser_sound)
+        self.laser_sound.set_volume(0.7)
+
+
+        self.carts = Carts(self, CartArsenal(self))
+
 
     def run_game(self) -> None:
         '''Start of Game Loop.'''
@@ -72,7 +77,9 @@ class CartBlaster:
             self.carts.moving_left = True
         elif event.key == pygame.K_SPACE:
             if self.carts.fire():
-                # play the laser sound
+                self.laser_sound.play()
+                self.laser_sound.fadeout(250)
+
         elif event.key == pygame.K_q:
             self.running = False
             pygame.quit()
