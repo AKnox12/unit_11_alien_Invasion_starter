@@ -69,6 +69,23 @@ class RockFleet:
         
         self.fleet.add(new_rock)
 
+    def _check_fleet_edges(self):
+        rocks: Rocks
+        for rocks in self.fleet:
+            if rocks.check_egdes():
+                self._drop_rock_fleet()
+                self.fleet_direction *= -1
+                break
+
+    def _drop_rock_fleet(self) -> None:
+        for rocks in self.fleet:
+            rocks.y += self.fleet_drop_speed
+
+
+    def update_fleet(self):
+        self._check_fleet_edges()
+        self.fleet.update()    
+
     def draw(self) -> None:
         rocks: 'Rocks'
         for rocks in self.fleet:

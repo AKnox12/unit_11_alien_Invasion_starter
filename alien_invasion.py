@@ -44,7 +44,7 @@ class CartBlaster:
             # Notice for keyboard and mouse events.
             self._check_events()
             self.carts.update()
-#            self.rocks.update()
+            self.rock_fleet.update_fleet()
             # Redraw the screen during each pass through the loop.
             self._update_screen()
             self.clock.tick(self.settings.FPS)
