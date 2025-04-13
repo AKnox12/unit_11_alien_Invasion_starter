@@ -3,7 +3,8 @@ import pygame
 from settings import Settings
 from Carts import Carts
 from arsenal import CartArsenal
-from rocks import Rocks
+#from rocks import Rocks
+from rock_fleet import RockFleet
 
 class CartBlaster:
     '''Overall class, manages game assets and behavior.'''
@@ -33,7 +34,8 @@ class CartBlaster:
 
 
         self.carts = Carts(self, CartArsenal(self))
-        self.rocks = Rocks(self, 10, 10)
+        self.rock_fleet = RockFleet(self)
+        self.rock_fleet.create_fleet()
 
 
     def run_game(self) -> None:
@@ -42,7 +44,7 @@ class CartBlaster:
             # Notice for keyboard and mouse events.
             self._check_events()
             self.carts.update()
-            self.rocks.update()
+#            self.rocks.update()
             # Redraw the screen during each pass through the loop.
             self._update_screen()
             self.clock.tick(self.settings.FPS)
@@ -50,7 +52,7 @@ class CartBlaster:
     def _update_screen(self):
         self.screen.blit(self.bg, (0,0))
         self.carts.draw()
-        self.rocks.draw_rocks()
+        self.rock_fleet.draw()
         pygame.display.flip()
 
     def _check_events(self):

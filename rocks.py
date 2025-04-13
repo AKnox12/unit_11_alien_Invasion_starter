@@ -3,15 +3,15 @@ from pygame.sprite import Sprite
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from alien_invasion import CartBlaster
+    from rock_fleet import RockFleet
 
 class Rocks(Sprite):
-    def __init__(self, game: 'CartBlaster', x: float, y: float) -> None: 
+    def __init__(self, fleet: 'RockFleet', x: float, y: float) -> None: 
         super().__init__()
 
-        self.screen = game.screen
-        self.boundaries = game.screen.get_rect()
-        self.settings = game.settings
+        self.screen = fleet.game.screen
+        self.boundaries = fleet.game.screen.get_rect()
+        self.settings = fleet.game.settings
 
         self.image = pygame.image.load(self.settings.rocks_file)
         self.image = pygame.transform.scale(self.image,
