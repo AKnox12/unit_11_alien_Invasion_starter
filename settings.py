@@ -27,4 +27,6 @@ class Settings:
         self.rocks_file = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'images' / 'Asteroid Brown.png'
         self.rocks_width = 40
         self.rocks_height = 40
-        self.fleet_speed = 5
+        self.fleet_speed = 2
+        self.fleet_direction = 1
+        self.fleet_drop_speed = 20
