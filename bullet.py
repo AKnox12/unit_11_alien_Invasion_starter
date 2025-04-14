@@ -1,3 +1,9 @@
+# Lab 13_Knox12_2
+# Python
+# Autumn Knox
+# Configuring in Python a simple game to shoot falling rocks from a cart.
+# 04/13/2025
+
 import pygame
 from pygame.sprite import Sprite
 from typing import TYPE_CHECKING
