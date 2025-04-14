@@ -65,11 +65,18 @@ class CartBlaster:
         if self.rock_fleet.check_collisions():
             self._reset_level()
 
+    def _check_game_status(self) -> None:
+        if self.
+
         # check collisions of projectiles and rocks
         collisions = self.rock_fleet.check_collisions(self.carts.arsenal)
         if collisions:
             self.impact_sound.play()
             self.impact_sound.fadeout(250)
+
+        if self.rock_fleet.check_destroyed_status():
+            self._reset_level()
+
 
 
 
