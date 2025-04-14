@@ -1,10 +1,12 @@
 import sys
 import pygame
 from settings import Settings
+from game_status import GameStats
 from Carts import Carts
 from arsenal import CartArsenal
 #from rocks import Rocks
 from rock_fleet import RockFleet
+from time import sleep
 
 class CartBlaster:
     '''Overall class, manages game assets and behavior.'''
@@ -13,6 +15,7 @@ class CartBlaster:
         '''Initialize the game, and create game resources.'''
         pygame.init()
         self.settings = Settings()
+        self.game_stats = GameStats(self.settings.starting_carts_count)
 
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
 
@@ -39,6 +42,7 @@ class CartBlaster:
         self.carts = Carts(self, CartArsenal(self))
         self.rock_fleet = RockFleet(self)
         self.rock_fleet.create_fleet()
+        self.game_active = True
 
 
     def run_game(self) -> None:
@@ -46,9 +50,10 @@ class CartBlaster:
         while self.running:
             # Notice for keyboard and mouse events.
             self._check_events()
-            self.carts.update()
-            self.rock_fleet.update_fleet()
-            self._check_collisions()
+            if self.game_active():
+                self.carts.update()
+                self.rock_fleet.update_fleet()
+                self._check_collisions()
             # Redraw the screen during each pass through the loop.
             self._update_screen()
             self.clock.tick(self.settings.FPS)
@@ -57,16 +62,22 @@ class CartBlaster:
     def _check_collisions(self) -> None:
         # check collisions for cart
         if self.carts.check_collisions(self.rock_fleet.fleet):
-            self._reset_level()
+            self._check_game_status()
 
             # Subtract one life if able
 
         # check collisions for rocks and bottom of screen
         if self.rock_fleet.check_collisions():
-            self._reset_level()
+            self._check_game_status()
 
     def _check_game_status(self) -> None:
-        if self.
+        if self.game_stats.cart_limit > 0:
+            self.game_stats.cart_limit -= 1
+            self._reset_level()
+            sleep(0.5)
+        else:
+            self.game_active = False  
+
 
         # check collisions of projectiles and rocks
         collisions = self.rock_fleet.check_collisions(self.carts.arsenal)
