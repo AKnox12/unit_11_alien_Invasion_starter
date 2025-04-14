@@ -31,6 +31,9 @@ class CartBlaster:
         pygame.mixer.init()
         self.laser_sound = pygame.mixer.Sound(self.settings.laser_sound)
         self.laser_sound.set_volume(0.7)
+        self.impact_sound = pygame.mixer.Sound(self.settings.impact_sound)
+        self.impact_sound.set_volume(0.7)
+        
 
 
         self.carts = Carts(self, CartArsenal(self))
@@ -45,9 +48,38 @@ class CartBlaster:
             self._check_events()
             self.carts.update()
             self.rock_fleet.update_fleet()
+            self._check_collisions()
             # Redraw the screen during each pass through the loop.
             self._update_screen()
             self.clock.tick(self.settings.FPS)
+
+
+    def _check_collisions(self) -> None:
+        # check collisions for cart
+        if self.carts.check_collisions(self.rock_fleet.fleet):
+            self._reset_level()
+
+            # Subtract one life if able
+
+        # check collisions for rocks and bottom of screen
+        if self.rock_fleet.check_collisions():
+            self._reset_level()
+
+        # check collisions of projectiles and rocks
+        collisions = self.rock_fleet.check_collisions(self.carts.arsenal)
+        if collisions:
+            self.impact_sound.play()
+            self.impact_sound.fadeout(250)
+
+
+
+
+
+    def _reset_level(self) -> None:
+        self.carts.arsenal.empty() 
+        self.rock_fleet.fleet.empty()
+        self.rock_fleet.create_fleet()    
+
 
     def _update_screen(self):
         self.screen.blit(self.bg, (0,0))

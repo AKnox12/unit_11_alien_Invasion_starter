@@ -19,6 +19,7 @@ class Settings:
 
         self.bullet_file = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'images' / 'laser_beams.png'
         self.laser_sound = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'sound' / 'Beam_sound.mp3'
+        self.impact_sound = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'sound' / 'Impact_sound.mp3'
         self.bullet_speed = 7
         self.bullet_width = 25
         self.bullet_height = 80

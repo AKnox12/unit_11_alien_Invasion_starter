@@ -20,12 +20,16 @@ class Carts:
                 (self.settings.cart_width, self.settings.cart_height))
             
             self.rect = self.image.get_rect()
-            self.rect.midbottom = self.boundaries.midbottom
+            self._center_carts()
             # Movement for the cart
             self.moving_right = False
             self.moving_left = False
-            self.x = float(self.rect.x)
+
             self.arsenal = arsenal
+
+    def _center_carts(self):
+        self.rect.midbottom = self.boundaries.midbottom
+        self.x = float(self.rect.x)
     
     def update(self):
          # updating the position for the cart.
@@ -49,7 +53,8 @@ class Carts:
     def fire(self) -> bool:
         return self.arsenal.fire_bullet()
 
-# def blitme(self):
-#    '''Draw the cart at its current location.'''
-#     self.screen.blit(self.image, self.rect)
-        
+    def check_collisions(self, other_group):
+        if pygame.sprite.spritecollideany(self, other_group):
+             self._center_carts()
+             return True
+        return False

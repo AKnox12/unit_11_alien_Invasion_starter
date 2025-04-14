@@ -90,3 +90,13 @@ class RockFleet:
         rocks: 'Rocks'
         for rocks in self.fleet:
             rocks.draw_rocks()
+
+    def check_collisions(self, other_groups):
+        return pygame. sprite.groupcollide(self.fleet, other_groups, True, True)
+    
+    def check_fleet_bottom(self):
+        rocks: Rocks
+        for rocks in self.fleet:
+            if rocks.rect.bottom >= self.settings.screen_height:
+                return True
+            return False
