@@ -57,10 +57,11 @@ class CartBlaster:
         while self.running:
             # Notice for keyboard and mouse events.
             self._check_events()
-            if self.game_active():
+            if self.game_active:
                 self.carts.update()
                 self.rock_fleet.update_fleet()
                 self._check_collisions()
+
             # Redraw the screen during each pass through the loop.
             self._update_screen()
             self.clock.tick(self.settings.FPS)
@@ -74,20 +75,11 @@ class CartBlaster:
             # Subtract one life if able
 
         # check collisions for rocks and bottom of screen
-        if self.rock_fleet.check_collisions():
+        if self.rock_fleet.check_fleet_bottom():
             self._check_game_status()
 
-    def _check_game_status(self) -> None:
-        if self.game_stats.cart_limit > 0:
-            self.game_stats.cart_limit -= 1
-            self._reset_level()
-            sleep(0.5)
-        else:
-            self.game_active = False  
-
-
         # check collisions of projectiles and rocks
-        collisions = self.rock_fleet.check_collisions(self.carts.arsenal)
+        collisions = self.rock_fleet.check_collisions(self.carts.arsenal.blaster)
         if collisions:
             self.impact_sound.play()
             self.impact_sound.fadeout(250)
@@ -95,13 +87,17 @@ class CartBlaster:
         if self.rock_fleet.check_destroyed_status():
             self._reset_level()
 
-
-
-
+    def _check_game_status(self) -> None:
+        if self.game_stats.cart_limit == 1:
+            self.game_active = False
+        else:
+            self.game_stats.cart_limit -= 1
+            self._reset_level()
+            sleep(0.5)
 
 
     def _reset_level(self) -> None:
-        self.carts.arsenal.empty() 
+#        self.carts.arsenal.empty() 
         self.rock_fleet.fleet.empty()
         self.rock_fleet.create_fleet()    
 
@@ -119,7 +115,7 @@ class CartBlaster:
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                self._check_keydown_events(event)
+                self._check_keydown_events(event)   
 
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)

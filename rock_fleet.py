@@ -99,7 +99,7 @@ class RockFleet:
             rocks.draw_rocks()
 
     def check_collisions(self, other_groups):
-        return pygame. sprite.groupcollide(self.fleet, other_groups, True, True)
+        return pygame.sprite.groupcollide(self.fleet, other_groups, True, True)
     
     def check_fleet_bottom(self):
         rocks: Rocks

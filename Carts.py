@@ -46,13 +46,14 @@ class Carts:
 
     def _Updated_ship_movement(self):
         temp_speed = 5
+        if self.moving_right:
+             self.moving_right = True
         if self.moving_right and self.rect.right < self.boundaries.right:
               self.x += temp_speed
         if self.moving_left and self.rect.left > self.boundaries.left:
              self.x -= temp_speed
 
         self.rect.x = self.x
-
 
     def draw(self) -> None:
          self.arsenal.draw()
