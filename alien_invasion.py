@@ -22,6 +22,7 @@ class CartBlaster:
         '''Initialize the game, and create game resources.'''
         pygame.init()
         self.settings = Settings()
+        self.settings.initialize_dynamic_settings()
         self.game_stats = GameStats(self.settings.starting_carts_count)
 
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
