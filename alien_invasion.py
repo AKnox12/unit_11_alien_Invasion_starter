@@ -88,6 +88,9 @@ class CartBlaster:
 
         if self.rock_fleet.check_destroyed_status():
             self._reset_level()
+            self.settings.increase_difficulty()
+            # update game stats level
+            # update the HUD view
 
     def _check_game_status(self) -> None:
         if self.game_stats.cart_limit == 1:
@@ -99,6 +102,7 @@ class CartBlaster:
 
     def restart_game(self):
         """Function to restart the game"""
+        self.settings.initialize_dynamic_settings()
         # setting up dynamic Settings
         # reset Game status
         # Update HUD scorse
@@ -119,6 +123,7 @@ class CartBlaster:
         self.screen.blit(self.bg, (0,0))
         self.carts.draw()
         self.rock_fleet.draw()
+        # draw HUD
         
         if not self.game_active:
             self.play_button.draw()
