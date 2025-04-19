@@ -14,7 +14,7 @@ from arsenal import CartArsenal
 #from rocks import Rocks
 from rock_fleet import RockFleet
 from time import sleep
-
+from button import Button
 class CartBlaster:
     '''Overall class, manages game assets and behavior.'''
 
@@ -30,7 +30,7 @@ class CartBlaster:
 
         pygame.display.set_caption(self.settings.name)
 
-        # Set background.
+        """ Set background image."""
         self.bg = pygame.image.load(self.settings.bg_file)
         self.bg = pygame.transform.scale(self.bg, (self.settings.screen_width, self.settings.screen_height))
 
@@ -38,6 +38,7 @@ class CartBlaster:
         self.running = True
         self.clock = pygame.time.Clock()
 
+        """Set the sound in game"""
         pygame.mixer.init()
         self.laser_sound = pygame.mixer.Sound(self.settings.laser_sound)
         self.laser_sound.set_volume(0.7)
@@ -49,36 +50,36 @@ class CartBlaster:
         self.carts = Carts(self, CartArsenal(self))
         self.rock_fleet = RockFleet(self)
         self.rock_fleet.create_fleet()
-        self.game_active = True
+
+        self.play_button = Button(self, 'Play')
+        self.game_active = False
 
 
     def run_game(self) -> None:
         '''Start of Game Loop.'''
         while self.running:
-            # Notice for keyboard and mouse events.
+            """Notice for keyboard and mouse events."""
             self._check_events()
             if self.game_active:
                 self.carts.update()
                 self.rock_fleet.update_fleet()
                 self._check_collisions()
 
-            # Redraw the screen during each pass through the loop.
+            """Redraw the screen during each pass through the loop."""
             self._update_screen()
             self.clock.tick(self.settings.FPS)
 
 
     def _check_collisions(self) -> None:
-        # check collisions for cart
+        """check collisions for cart"""
         if self.carts.check_collisions(self.rock_fleet.fleet):
             self._check_game_status()
 
-            # Subtract one life if able
-
-        # check collisions for rocks and bottom of screen
+        """Check collisions for rocks and bottom of screen"""
         if self.rock_fleet.check_fleet_bottom():
             self._check_game_status()
 
-        # check collisions of projectiles and rocks
+        """check collisions of projectiles and rocks"""
         collisions = self.rock_fleet.check_collisions(self.carts.arsenal.blaster)
         if collisions:
             self.impact_sound.play()
@@ -95,6 +96,17 @@ class CartBlaster:
             self._reset_level()
             sleep(0.5)
 
+    def restart_game(self):
+        """Function to restart the game"""
+        # setting up dynamic Settings
+        # reset Game status
+        # Update HUD scorse
+        self._reset_level()
+        self.carts._center_carts()
+        self.game_active = True
+        pygame.mouse.set_visible(False)
+        
+
 
     def _reset_level(self) -> None:
 #        self.carts.arsenal.empty() 
@@ -106,9 +118,15 @@ class CartBlaster:
         self.screen.blit(self.bg, (0,0))
         self.carts.draw()
         self.rock_fleet.draw()
+        
+        if not self.game_active:
+            self.play_button.draw()
+            pygame.mouse.set_visible(True)
+
         pygame.display.flip()
 
     def _check_events(self):
+        """Keyboard button for quitting the game."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
@@ -119,9 +137,18 @@ class CartBlaster:
 
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
+            
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                self._checked_button_clicked()
+
+    def _checked_button_clicked(self):
+        mouse_pos = pygame.mouse.get_pos()
+        if self.play_button.check_clicked(mouse_pos):
+            self.restart_game()
 
 
     def _check_keyup_events(self, event) -> None:
+        """Game movements, keyboard actions"""
         if event.key == pygame.K_RIGHT:
             self.carts.moving_right = False
         elif event.key == pygame.K_LEFT:
@@ -143,6 +170,6 @@ class CartBlaster:
             sys.exit()
 
 if __name__ == '__main__':
-    # Make a game instance, and run the game.
+    """Make a game instance, and run the game."""
     ai = CartBlaster()
     ai.run_game()

@@ -10,6 +10,7 @@ class Button:
     """Build a button class"""
 
     def __init__(self, game: 'CartBlaster', msg) -> None:
+        """Button setup for the game screen."""
         self.game = game
         self.screen = game.screen
         self.boundaries = game.screen.get_rect()
@@ -25,8 +26,9 @@ class Button:
         self.msg_image_rect = self.msg_image.get_rect()
         self.msg_image_rect.center = self.rect.center
 
-    """Draw the button"""
+
     def draw(self) -> None:
+        """Draw the button"""
         self.screen.fill(self.settings.button_color, self.rect)
         self.screen.blit(self.msg_image, self.msg_image_rect)
 
