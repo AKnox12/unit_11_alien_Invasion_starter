@@ -132,7 +132,7 @@ class CartBlaster:
                 self.running = False
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN and self.game_active == True:
                 self._check_keydown_events(event)   
 
             elif event.type == pygame.KEYUP:
