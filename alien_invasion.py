@@ -97,6 +97,7 @@ class CartBlaster:
             self.settings.increase_difficulty()
             # update game stats level
             self.game_stats.update_level()
+            self.HUD.update_level()
 
             # update the HUD view
 
