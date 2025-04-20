@@ -23,7 +23,7 @@ class CartBlaster:
         pygame.init()
         self.settings = Settings()
         self.settings.initialize_dynamic_settings()
-        self.game_stats = GameStats(self.settings.starting_carts_count)
+        self.game_stats = GameStats(self)
 
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
 
@@ -85,11 +85,14 @@ class CartBlaster:
         if collisions:
             self.impact_sound.play()
             self.impact_sound.fadeout(250)
+            self.game_stats.update(collisions)
 
         if self.rock_fleet.check_destroyed_status():
             self._reset_level()
             self.settings.increase_difficulty()
             # update game stats level
+            self.game_stats.update_level()
+
             # update the HUD view
 
     def _check_game_status(self) -> None:
@@ -104,6 +107,7 @@ class CartBlaster:
         """Function to restart the game"""
         self.settings.initialize_dynamic_settings()
         # setting up dynamic Settings
+        self.game_stats.reset_stats()
         # reset Game status
         # Update HUD scorse
         self._reset_level()
