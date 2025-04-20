@@ -20,7 +20,7 @@ class Settings:
         self.scores_file = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'file' / 'scores.json'
 
         """Carts settings"""
-        self.cart_file = Path.cwd() / 'Assets' / 'images' / 'cart.png'
+        self.cart_file = Path.cwd() /'unit_11_alien_Invasion_starter' / 'Assets' / 'images' / 'cart.png'
         self.cart_width = 170
         self.cart_height = 190
 

@@ -97,15 +97,15 @@ class CartBlaster:
             self.settings.increase_difficulty()
             # update game stats level
             self.game_stats.update_level()
-            self.HUD.update_level()
+            self.HUD._update_level ()
 
             # update the HUD view
 
     def _check_game_status(self) -> None:
-        if self.game_stats.cart_limit == 1:
+        if self.game_stats.cart_left == 1:
             self.game_active = False
         else:
-            self.game_stats.cart_limit -= 1
+            self.game_stats.cart_left -= 1
             self._reset_level()
             sleep(0.5)
 
@@ -122,7 +122,6 @@ class CartBlaster:
 
 
     def _reset_level(self) -> None:
-#        self.carts.arsenal.empty() 
         self.rock_fleet.fleet.empty()
         self.rock_fleet.create_fleet()    
 

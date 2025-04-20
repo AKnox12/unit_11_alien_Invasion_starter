@@ -47,7 +47,7 @@ class GameStats():
 
     def reset_stats(self):
         """Settings that will change as the game progresses"""
-        self.ship_left = self.settings.starting_carts_count
+        self.cart_left = self.settings.starting_carts_count
         self.score = 0
         self.level = 1 
 
