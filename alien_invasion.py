@@ -15,6 +15,9 @@ from arsenal import CartArsenal
 from rock_fleet import RockFleet
 from time import sleep
 from button import Button
+from hud import HUD
+
+
 class CartBlaster:
     '''Overall class, manages game assets and behavior.'''
 
@@ -23,7 +26,7 @@ class CartBlaster:
         pygame.init()
         self.settings = Settings()
         self.settings.initialize_dynamic_settings()
-        self.game_stats = GameStats(self)
+
 
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
 
@@ -35,7 +38,8 @@ class CartBlaster:
         self.bg = pygame.image.load(self.settings.bg_file)
         self.bg = pygame.transform.scale(self.bg, (self.settings.screen_width, self.settings.screen_height))
 
-
+        self.game_stats = GameStats(self)
+        self.HUD = HUD(self)
         self.running = True
         self.clock = pygame.time.Clock()
 
@@ -65,6 +69,7 @@ class CartBlaster:
                 self.carts.update()
                 self.rock_fleet.update_fleet()
                 self._check_collisions()
+                self.HUD.update_scores()
 
             """Redraw the screen during each pass through the loop."""
             self._update_screen()
@@ -106,10 +111,8 @@ class CartBlaster:
     def restart_game(self):
         """Function to restart the game"""
         self.settings.initialize_dynamic_settings()
-        # setting up dynamic Settings
         self.game_stats.reset_stats()
-        # reset Game status
-        # Update HUD scorse
+        self.HUD.update_scores()
         self._reset_level()
         self.carts._center_carts()
         self.game_active = True
@@ -127,7 +130,7 @@ class CartBlaster:
         self.screen.blit(self.bg, (0,0))
         self.carts.draw()
         self.rock_fleet.draw()
-        # draw HUD
+        self.HUD.draw()
         
         if not self.game_active:
             self.play_button.draw()
@@ -140,6 +143,7 @@ class CartBlaster:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+                self.game_stats.save_scores()
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.KEYDOWN and self.game_active == True:
@@ -176,6 +180,7 @@ class CartBlaster:
 
         elif event.key == pygame.K_q:
             self.running = False
+            self.game_stats.save_scores()
             pygame.quit()
             sys.exit()
 
