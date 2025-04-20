@@ -21,17 +21,17 @@ class Settings:
 
         """Carts settings"""
         self.cart_file = Path.cwd() /'unit_11_alien_Invasion_starter' / 'Assets' / 'images' / 'cart.png'
-        self.cart_width = 170
-        self.cart_height = 190
+        self.cart_width = 90
+        self.cart_height = 110
 
         """Bullet settings and images"""
         self.bullet_file = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'images' / 'laser_beams.png'
         self.laser_sound = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'sound' / 'Beam_sound.mp3'
-        self.impact_sound = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'sound' / 'impactSound.mp3'
+        self.impact_sound = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'sound' / 'pop.mp3'
 
 
         """Rocks Settings and image"""
-        self.rocks_file = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'images' / 'Asteroid Brown.png'
+        self.rocks_file = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'images' / 'Asteroid Brown Two.png'
         self.rocks_width = 40
         self.rocks_height = 40
         self.fleet_direction = 1
