@@ -10,29 +10,33 @@ class Settings:
 
     def __init__(self):
         '''Initialize the game's settings.'''
-        # Screen Settings
+        """Main file settings and Screen Settings"""
         self.name: str = "Cart Blaster"
         self.screen_width = 1200
         self.screen_height = 800
         self.FPS = 60
         self.bg_file = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'images' / 'cavern.png'
         self.difficulty_scale = 1.1
+        self.scores_file = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'file' / 'scores.json'
 
+        """Carts settings"""
         self.cart_file = Path.cwd() / 'Assets' / 'images' / 'cart.png'
         self.cart_width = 170
         self.cart_height = 190
 
-
+        """Bullet settings and images"""
         self.bullet_file = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'images' / 'laser_beams.png'
         self.laser_sound = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'sound' / 'Beam_sound.mp3'
         self.impact_sound = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'sound' / 'impactSound.mp3'
 
+
+        """Rocks Settings and image"""
         self.rocks_file = Path.cwd() / 'unit_11_alien_Invasion_starter' / 'Assets' / 'images' / 'Asteroid Brown.png'
         self.rocks_width = 40
         self.rocks_height = 40
         self.fleet_direction = 1
 
-
+        """Button settings and text"""
         self.button_width = 200
         self.button_height = 50
         self.button_color = (245, 10, 25)
